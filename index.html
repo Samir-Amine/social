@@ -295,23 +295,8 @@
   .direct a:hover,
   .direct a:focus-visible{ color:var(--amber); outline:none; }
   .direct a:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
-
-  @media (max-width:430px){
-    .meta{
-      grid-column:1;
-      grid-row:auto;
-      text-align:left;
-      padding-left:30px;
-      max-width:none;
-    }
-    .direct {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 20px;
-}
-
-/* From Uiverse.io by joe-watson-sbf */ 
+  
+  /* From Uiverse.io by joe-watson-sbf */ 
 .btn {
   font-size: 17px;
   background: transparent;
@@ -362,6 +347,15 @@
   color: aliceblue;
 }
 
+
+  @media (max-width:430px){
+    .meta{
+      grid-column:1;
+      grid-row:auto;
+      text-align:left;
+      padding-left:30px;
+      max-width:none;
+    }
   }
 
   @media (prefers-reduced-motion: reduce){
