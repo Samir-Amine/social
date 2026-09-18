@@ -304,6 +304,51 @@
       padding-left:30px;
       max-width:none;
     }
+    .direct {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.gmail-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 22px;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(12px);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+.gmail-button i {
+    font-size: 17px;
+}
+
+.gmail-button:hover {
+    transform: translateY(-2px);
+
+    background: rgba(255, 255, 255, 0.09);
+
+    border-color: rgba(255, 255, 255, 0.2);
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -398,13 +443,17 @@
     <div class="direct">
     <p>Prefer email?</p>
 
+    <div class="direct">
     <a
         href="https://mail.google.com/mail/?view=cm&fs=1&to=fluxmedia66@gmail.com"
         target="_blank"
         rel="noopener noreferrer"
+        class="gmail-button"
     >
-        fluxmedia66@gmail.com
+        <i class="fa-solid fa-envelope"></i>
+        <span>Email us</span>
     </a>
+    </div>
     </div>
   </main>
 </body>
