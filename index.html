@@ -296,57 +296,51 @@
   .direct a:focus-visible{ color:var(--amber); outline:none; }
   .direct a:focus-visible{ outline:2px solid var(--focus); outline-offset:3px; }
   
-  /* From Uiverse.io by joe-watson-sbf */ 
-.btn {
-  font-size: 17px;
-  background: transparent;
-  border: none;
-  padding: 1em 1.5em;
-  color: #ffedd3;
-  text-transform: uppercase;
-  position: relative;
-  transition: 0.3s ease;
-  cursor: pointer;
+ .direct {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 20px;
 }
 
-.btn::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 2px;
-  width: 0;
-  background-color: #ffc506;
-  transition: 0.3s ease;
+.gmail-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 22px;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+
+    backdrop-filter: blur(12px);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
 }
 
-.btn:hover {
-  color: #5C3778;
-  transition-delay: 0.3s;
+.gmail-button i {
+    font-size: 17px;
 }
 
-.btn:hover::before {
-  width: 100%;
-}
+.gmail-button:hover {
+    transform: translateY(-2px);
 
-.btn::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 0;
-  width: 100%;
-  background-color: #ffc506;
-  transition: 0.2s ease;
-  z-index: -1;
-}
+    background: rgba(255, 255, 255, 0.09);
 
-.btn:hover::after {
-  height: 100%;
-  transition-delay: 0.2s;
-  color: aliceblue;
-}
+    border-color: rgba(255, 255, 255, 0.2);
 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
 
   @media (max-width:430px){
     .meta{
@@ -451,8 +445,15 @@
     <p>Prefer email?</p>
 
     <!-- From Uiverse.io by joe-watson-sbf --> 
-    <button class="btn" href="https://mail.google.com/mail/?view=cm&fs=1&to=fluxmedia66@gmail.com" 
-      target="_blank" rel="noopener noreferrer">Email-US</button>
+    <a
+        href="https://mail.google.com/mail/?view=cm&fs=1&to=fluxmedia66@gmail.com"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="gmail-button"
+    >
+        <i class="fa-solid fa-envelope"></i>
+        <span>Contact us by email</span>
+    </a>
     
     </div>
   </main>
