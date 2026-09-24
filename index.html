@@ -1,835 +1,1733 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>FLUXMEDIA — Systems that make business easier</title>
-  
-<meta name="description" content="FluxMedia builds intelligent systems that make businesses easier, more efficient and more comfortable to operate. AI systems, automation and social media management.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<link rel="icon" type="image/png" href="logo-sm-removebg-preview.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>FLUXMEDIA — Systems that make business easier</title>
+  <meta name="description" content="FluxMedia builds intelligent systems that make businesses easier, more efficient and more comfortable to operate. AI systems, automation and social media management.">
 
-<style>
-  /* ============================================================
-     FLUXMEDIA — Link in Bio
-     Design tokens
-  ============================================================ */
-  :root{
-    --black:#04050c;
-    --navy:#080b18;
-    --cyan:#22e1ff;
-    --blue:#3b6dff;
-    --violet:#9b5bf5;
-    --magenta:#ec4899;
-    --white:#f5f7ff;
+  <!-- Browser tab logo -->
+  <link rel="icon" type="image/png" href="logo-sm-removebg-preview.png">
 
-    --glass:rgba(11,14,28,.46);
-    --glass-strong:rgba(6,8,17,.88);
-    --glass-border:rgba(255,255,255,.10);
-    --glass-hl:rgba(255,255,255,.09);
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    --font-display:'Orbitron', 'Sora', sans-serif;
-    --font-body:'Sora', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  <style>
+    :root {
+      --black: #04050c;
+      --navy: #080b18;
+      --cyan: #22e1ff;
+      --blue: #3b6dff;
+      --violet: #9b5bf5;
+      --magenta: #ec4899;
+      --white: #f5f7ff;
 
-    --content-w:520px;
-    --mx:0;
-    --my:0;
-  }
+      --glass: rgba(8, 12, 30, .58);
+      --glass-border: rgba(255,255,255,.12);
 
-  *,*::before,*::after{ box-sizing:border-box; }
+      --font-display: "Orbitron", sans-serif;
+      --font-body: "Sora", sans-serif;
 
-  html{
-    scroll-padding-top:env(safe-area-inset-top,0px);
-    -webkit-text-size-adjust:100%;
-  }
-
-  html,body{
-    height:100%;
-    margin:0;
-    overflow-x:hidden;
-  }
-
-  body{
-    background:var(--black);
-    color:var(--white);
-    font-family:var(--font-body);
-    min-height:100%;
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    position:relative;
-  }
-
-  img{ max-width:100%; display:block; }
-
-  a{ color:inherit; text-decoration:none; }
-
-  ::selection{ background:rgba(139,92,246,.35); color:#fff; }
-
-  /* ============================================================
-     Background layers (fixed, behind everything)
-  ============================================================ */
-  .bg-layer{
-    position:fixed;
-    inset:-5%;
-    width:110%;
-    height:110%;
-    background-image:url('background.png');
-    background-size:cover;
-    background-position:center 18%;
-    background-repeat:no-repeat;
-    z-index:0;
-    will-change:transform;
-    transform:translate3d(calc(var(--mx) * 1px), calc(var(--my) * 1px), 0) scale(1.02);
-    transition:transform .4s ease-out;
-  }
-
-  .bg-overlay{
-    position:fixed;
-    inset:0;
-    z-index:1;
-    pointer-events:none;
-    background:
-      radial-gradient(120% 60% at 50% 0%, rgba(4,5,12,.15) 0%, rgba(4,5,12,.55) 45%, rgba(4,5,12,.86) 100%),
-      linear-gradient(180deg, rgba(4,5,12,.35) 0%, rgba(4,5,12,.45) 40%, rgba(4,5,12,.75) 100%);
-  }
-
-  .glow-orbs{
-    position:fixed;
-    inset:0;
-    z-index:2;
-    overflow:hidden;
-    pointer-events:none;
-    mix-blend-mode:screen;
-  }
-  .orb{
-    position:absolute;
-    border-radius:50%;
-    filter:blur(60px);
-    opacity:.35;
-    will-change:transform;
-  }
-  .orb-1{
-    width:46vmax; height:46vmax;
-    left:-18vmax; top:-14vmax;
-    background:radial-gradient(circle, rgba(59,109,255,.9) 0%, rgba(59,109,255,0) 70%);
-    animation:drift-1 22s ease-in-out infinite;
-  }
-  .orb-2{
-    width:50vmax; height:50vmax;
-    right:-20vmax; top:20vmax;
-    background:radial-gradient(circle, rgba(155,91,245,.85) 0%, rgba(155,91,245,0) 70%);
-    animation:drift-2 26s ease-in-out infinite;
-  }
-  .orb-3{
-    width:38vmax; height:38vmax;
-    left:20vmax; bottom:-16vmax;
-    background:radial-gradient(circle, rgba(236,72,153,.7) 0%, rgba(236,72,153,0) 70%);
-    animation:drift-3 20s ease-in-out infinite;
-  }
-
-  @keyframes drift-1{
-    0%,100%{ transform:translate(0,0) scale(1); }
-    50%{ transform:translate(4vmax,3vmax) scale(1.08); }
-  }
-  @keyframes drift-2{
-    0%,100%{ transform:translate(0,0) scale(1); }
-    50%{ transform:translate(-3vmax,-4vmax) scale(1.05); }
-  }
-  @keyframes drift-3{
-    0%,100%{ transform:translate(0,0) scale(1); }
-    50%{ transform:translate(-2vmax,3vmax) scale(1.1); }
-  }
-
-  .particle-field{
-    position:fixed;
-    inset:0;
-    z-index:2;
-    overflow:hidden;
-    pointer-events:none;
-  }
-  .particle{
-    position:absolute;
-    bottom:-4%;
-    border-radius:50%;
-    background:rgba(180,200,255,.8);
-    box-shadow:0 0 6px 1px rgba(120,170,255,.7);
-    opacity:0;
-    animation-name:particle-rise;
-    animation-timing-function:ease-in-out;
-    animation-iteration-count:infinite;
-  }
-  @keyframes particle-rise{
-    0%{ transform:translate(0,0); opacity:0; }
-    10%{ opacity:.7; }
-    50%{ transform:translate(var(--drift,10px), -52vh); opacity:.55; }
-    90%{ opacity:0; }
-    100%{ transform:translate(calc(var(--drift,10px) * 2), -100vh); opacity:0; }
-  }
-
-  /* ============================================================
-     Page shell
-  ============================================================ */
-  .page{
-    position:relative;
-    z-index:3;
-    width:100%;
-    max-width:var(--content-w);
-    margin:0 auto;
-    padding:56px 20px 48px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-  }
-
-  /* ============================================================
-     Hero
-  ============================================================ */
-  .hero{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    text-align:center;
-    margin-bottom:34px;
-  }
-
-  .logo-stage{
-    perspective:900px;
-    margin-bottom:18px;
-  }
-
-  .logo-wrap{
-    width:132px;
-    height:132px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    animation:logo-float 6s ease-in-out infinite;
-    transform-style:preserve-3d;
-    position:relative;
-  }
-
-  .logo-wrap::after{
-    content:'';
-    position:absolute;
-    inset:-18%;
-    background:radial-gradient(circle, rgba(59,109,255,.35) 0%, rgba(155,91,245,.18) 45%, rgba(0,0,0,0) 72%);
-    filter:blur(10px);
-    z-index:-1;
-    animation:logo-pulse 4s ease-in-out infinite;
-  }
-
-  .logo{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    filter:
-      drop-shadow(0 0 14px rgba(59,109,255,.65))
-      drop-shadow(0 0 26px rgba(155,91,245,.5))
-      drop-shadow(0 0 42px rgba(236,72,153,.32));
-  }
-
-  @keyframes logo-float{
-    0%,100%{ transform:translateY(0) scale(1); }
-    50%{ transform:translateY(-9px) scale(1.015); }
-  }
-  @keyframes logo-pulse{
-    0%,100%{ opacity:.7; transform:scale(1); }
-    50%{ opacity:1; transform:scale(1.08); }
-  }
-
-  .wordmark{
-    font-family:var(--font-display);
-    font-weight:800;
-    font-size:clamp(34px, 9vw, 46px);
-    letter-spacing:.06em;
-    line-height:1;
-    margin:0 0 10px;
-    background:linear-gradient(90deg, #ffffff 0%, var(--cyan) 32%, var(--violet) 66%, var(--magenta) 100%);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-    filter:drop-shadow(0 0 22px rgba(96,140,255,.28));
-  }
-
-  .tagline{
-    margin:0 0 22px;
-    font-size:15px;
-    font-weight:500;
-    letter-spacing:.01em;
-    color:rgba(235,240,255,.78);
-  }
-
-  .chips{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:10px;
-  }
-
-  .chip{
-    display:inline-flex;
-    align-items:center;
-    gap:7px;
-    padding:9px 15px;
-    font-size:12.5px;
-    font-weight:600;
-    letter-spacing:.02em;
-    color:rgba(240,244,255,.92);
-    background:var(--glass);
-    border:1px solid var(--glass-border);
-    border-radius:100px;
-    backdrop-filter:blur(16px) saturate(150%);
-    -webkit-backdrop-filter:blur(16px) saturate(150%);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.08),
-      0 0 0 1px rgba(90,130,255,.10),
-      0 6px 18px rgba(20,30,70,.35);
-  }
-  .chip svg{ width:14px; height:14px; flex:none; }
-  .chip.chip-ai{ box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(59,109,255,.28); }
-  .chip.chip-auto{ box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(155,91,245,.28); }
-  .chip.chip-social{ box-shadow:inset 0 1px 0 rgba(255,255,255,.08), 0 0 14px rgba(236,72,153,.28); }
-
-  /* ============================================================
-     Link buttons
-  ============================================================ */
-  .links{
-    width:100%;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    margin-bottom:26px;
-  }
-
-  .link-btn{
-    position:relative;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    width:100%;
-    padding:13px 16px;
-    border-radius:20px;
-    background:var(--glass);
-    border:1px solid var(--glass-border);
-    backdrop-filter:blur(18px) saturate(150%);
-    -webkit-backdrop-filter:blur(18px) saturate(150%);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.07),
-      0 10px 26px rgba(6,8,20,.45),
-      0 0 0 1px rgba(90,130,255,.07);
-    overflow:hidden;
-    isolation:isolate;
-    transition:transform .28s cubic-bezier(.2,.8,.2,1), box-shadow .28s ease, border-color .28s ease;
-  }
-
-  .link-btn::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    z-index:-1;
-    background:linear-gradient(100deg, transparent 40%, rgba(255,255,255,.10) 50%, transparent 60%);
-    background-size:220% 100%;
-    background-position:120% 0;
-    animation:sheen-idle 7s ease-in-out infinite;
-  }
-
-  @keyframes sheen-idle{
-    0%,80%,100%{ background-position:130% 0; }
-    92%{ background-position:-30% 0; }
-  }
-
-  .link-btn:hover,
-  .link-btn:focus-visible{
-    transform:translateY(-3px);
-    border-color:rgba(150,180,255,.45);
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.1),
-      0 16px 34px rgba(6,8,20,.55),
-      0 0 0 1px rgba(140,170,255,.22),
-      0 0 26px rgba(80,120,255,.30),
-      0 0 40px rgba(155,91,245,.18);
-  }
-
-  .link-btn:hover::before{
-    animation:sheen-hover .9s ease forwards;
-  }
-  @keyframes sheen-hover{
-    from{ background-position:130% 0; }
-    to{ background-position:-30% 0; }
-  }
-
-  .link-btn:active{ transform:translateY(-1px) scale(.995); }
-
-  .icon-box{
-    flex:none;
-    width:46px;
-    height:46px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.25), 0 4px 14px rgba(0,0,0,.35);
-  }
-  .icon-box svg{ width:22px; height:22px; }
-
-  .icon-ig{ background:linear-gradient(135deg, #f9ce34 0%, #ee2a7b 55%, #6228d7 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 16px rgba(238,42,123,.35); }
-  .icon-li{ background:linear-gradient(135deg, #0a66c2, #4c9bea); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 16px rgba(10,102,194,.4); }
-  .icon-fb{ background:linear-gradient(135deg, #1877f2, #4d9bff); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 16px rgba(24,119,242,.4); }
-  .icon-wa{ background:linear-gradient(135deg, #25d366, #0fa968); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 16px rgba(37,211,102,.4); }
-  .icon-x{ background:linear-gradient(135deg, #1a1a1e, #000000); box-shadow:inset 0 1px 0 rgba(255,255,255,.16), 0 4px 16px rgba(0,0,0,.5); }
-  .icon-web{ background:linear-gradient(135deg, #3b6dff, #9b5bf5); box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 4px 16px rgba(90,90,255,.4); }
-
-  .link-text{
-    flex:1 1 auto;
-    min-width:0;
-    display:flex;
-    flex-direction:column;
-    gap:2px;
-    text-align:left;
-  }
-  .link-title{
-    font-size:15.5px;
-    font-weight:700;
-    color:#fff;
-    letter-spacing:.01em;
-  }
-  .link-desc{
-    font-size:12.5px;
-    font-weight:400;
-    color:rgba(220,226,255,.62);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-  }
-
-  .arrow{
-    flex:none;
-    font-size:17px;
-    color:rgba(230,235,255,.55);
-    transition:transform .28s cubic-bezier(.2,.8,.2,1), color .28s ease;
-  }
-  .link-btn:hover .arrow{
-    transform:translateX(4px);
-    color:#fff;
-  }
-
-  /* ============================================================
-     CTA card
-  ============================================================ */
-  .cta-card{
-    width:100%;
-    padding:2px;
-    border-radius:26px;
-    background:linear-gradient(120deg, var(--cyan), var(--blue), var(--violet), var(--magenta));
-    background-size:300% 300%;
-    animation:holo-shift 10s ease infinite;
-    margin-bottom:30px;
-    box-shadow:0 18px 40px rgba(10,14,30,.55);
-  }
-  @keyframes holo-shift{
-    0%{ background-position:0% 50%; }
-    50%{ background-position:100% 50%; }
-    100%{ background-position:0% 50%; }
-  }
-
-  .cta-inner{
-    position:relative;
-    border-radius:24px;
-    background:var(--glass-strong);
-    backdrop-filter:blur(14px) saturate(120%);
-    -webkit-backdrop-filter:blur(14px) saturate(120%);
-    padding:30px 26px 28px;
-    text-align:center;
-    overflow:hidden;
-  }
-  .cta-inner::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(120% 90% at 50% -10%, rgba(59,109,255,.22) 0%, rgba(59,109,255,0) 55%),
-      radial-gradient(90% 70% at 100% 120%, rgba(236,72,153,.16) 0%, rgba(236,72,153,0) 60%);
-    pointer-events:none;
-  }
-  .cta-inner > *{ position:relative; z-index:1; }
-
-  .cta-inner h2{
-    margin:0 0 9px;
-    font-family:var(--font-body);
-    font-size:21px;
-    font-weight:800;
-    letter-spacing:.005em;
-    background:linear-gradient(90deg, var(--cyan), var(--violet));
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  .cta-inner p{
-    margin:0 0 20px;
-    font-size:13.5px;
-    line-height:1.55;
-    color:rgba(225,230,255,.72);
-    max-width:38ch;
-    margin-left:auto;
-    margin-right:auto;
-  }
-
-  .cta-btn{
-    position:relative;
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:13px 26px;
-    border-radius:100px;
-    font-size:14.5px;
-    font-weight:700;
-    color:#04060f;
-    background:linear-gradient(100deg, var(--cyan), var(--blue) 55%, var(--violet));
-    box-shadow:0 10px 26px rgba(60,110,255,.4), inset 0 1px 0 rgba(255,255,255,.4);
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s ease;
-  }
-  .cta-btn:hover{
-    transform:translateY(-2px);
-    box-shadow:0 14px 32px rgba(60,110,255,.5), inset 0 1px 0 rgba(255,255,255,.5);
-  }
-  .cta-btn span{ transition:transform .25s ease; }
-  .cta-btn:hover span{ transform:translateX(3px); }
-
-  /* ============================================================
-     Footer
-  ============================================================ */
-  .mini-footer{
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:18px;
-    font-size:12px;
-    font-weight:600;
-    color:rgba(210,218,255,.55);
-    letter-spacing:.01em;
-  }
-  .mini-footer span{ display:inline-flex; align-items:center; gap:6px; }
-  .mini-footer svg{ width:13px; height:13px; opacity:.85; }
-
-  /* ============================================================
-     Entrance animation
-  ============================================================ */
-  .hero, .links .link-btn, .cta-card, .mini-footer{
-    opacity:0;
-    transform:translateY(16px);
-  }
-  body.is-ready .hero{
-    animation:reveal .7s cubic-bezier(.2,.8,.2,1) .05s forwards;
-  }
-  body.is-ready .links .link-btn{
-    animation:reveal .6s cubic-bezier(.2,.8,.2,1) forwards;
-  }
-  body.is-ready .links .link-btn:nth-child(1){ animation-delay:.16s; }
-  body.is-ready .links .link-btn:nth-child(2){ animation-delay:.22s; }
-  body.is-ready .links .link-btn:nth-child(3){ animation-delay:.28s; }
-  body.is-ready .links .link-btn:nth-child(4){ animation-delay:.34s; }
-  body.is-ready .links .link-btn:nth-child(5){ animation-delay:.40s; }
-  body.is-ready .links .link-btn:nth-child(6){ animation-delay:.46s; }
-  body.is-ready .cta-card{ animation:reveal .7s cubic-bezier(.2,.8,.2,1) .52s forwards; }
-  body.is-ready .mini-footer{ animation:reveal .7s cubic-bezier(.2,.8,.2,1) .6s forwards; }
-
-  @keyframes reveal{
-    to{ opacity:1; transform:translateY(0); }
-  }
-
-  /* ============================================================
-     Responsive
-  ============================================================ */
-  @media (min-width:480px){
-    .page{ padding-top:64px; }
-    .link-btn{ padding:15px 18px; border-radius:22px; }
-    .icon-box{ width:50px; height:50px; }
-  }
-
-  @media (min-width:768px){
-    :root{ --content-w:540px; }
-    .bg-layer{ background-position:center 8%; }
-    .logo-wrap{ width:150px; height:150px; }
-    .page{ padding-top:80px; padding-bottom:64px; }
-  }
-
-  @media (min-width:1024px){
-    .bg-layer{ background-position:center; }
-    .page{ padding-top:88px; }
-  }
-
-  @media (max-width:359px){
-    .wordmark{ font-size:30px; }
-    .logo-wrap{ width:110px; height:110px; }
-    .link-title{ font-size:14.5px; }
-    .link-desc{ font-size:11.5px; }
-    .icon-box{ width:42px; height:42px; border-radius:12px; }
-    .icon-box svg{ width:19px; height:19px; }
-  }
-
-  /* ============================================================
-     Accessibility
-  ============================================================ */
-  .link-btn:focus-visible,
-  .cta-btn:focus-visible{
-    outline:2px solid rgba(150,190,255,.8);
-    outline-offset:3px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after{
-      animation-duration:.001ms !important;
-      animation-iteration-count:1 !important;
-      transition-duration:.15s !important;
+      --content-w: 520px;
     }
-    .hero, .links .link-btn, .cta-card, .mini-footer{
-      opacity:1 !important;
-      transform:none !important;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    .bg-layer{ transform:none !important; }
-  }
-</style>
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow-x: hidden;
+
+      background: var(--black);
+      color: var(--white);
+
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    /* =========================================================
+       BACKGROUND
+    ========================================================= */
+
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+
+      background:
+        linear-gradient(
+          180deg,
+          rgba(4,5,12,.20),
+          rgba(4,5,12,.66)
+        ),
+        url("background.png") center center / cover no-repeat;
+
+      transform: scale(1.03);
+      will-change: transform;
+    }
+
+    .bg-vignette {
+      position: fixed;
+      inset: 0;
+      z-index: -9;
+      pointer-events: none;
+
+      background:
+        radial-gradient(
+          circle at 50% 20%,
+          rgba(59,109,255,.10),
+          transparent 34%
+        ),
+        radial-gradient(
+          circle at 20% 75%,
+          rgba(34,225,255,.07),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 75%,
+          rgba(236,72,153,.08),
+          transparent 32%
+        ),
+        linear-gradient(
+          180deg,
+          rgba(4,5,12,.05),
+          rgba(4,5,12,.42)
+        );
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: -8;
+      pointer-events: none;
+      opacity: .13;
+
+      background-image:
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+
+      background-size: 55px 55px;
+
+      mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+      );
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent,
+        black 20%,
+        black 80%,
+        transparent
+      );
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: -7;
+      pointer-events: none;
+      opacity: .035;
+
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");
+    }
+
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -6;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+
+      width: 3px;
+      height: 3px;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,.75);
+
+      box-shadow:
+        0 0 10px rgba(34,225,255,.8),
+        0 0 20px rgba(59,109,255,.35);
+
+      animation: floatParticle linear infinite;
+    }
+
+    @keyframes floatParticle {
+      from {
+        transform: translate3d(0, 110vh, 0);
+      }
+      to {
+        transform: translate3d(0, -20vh, 0);
+      }
+    }
+
+    /* =========================================================
+       PAGE
+    ========================================================= */
+
+    .page {
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100svh;
+
+      display: flex;
+      justify-content: center;
+
+      padding:
+        max(34px, env(safe-area-inset-top))
+        20px
+        max(28px, env(safe-area-inset-bottom));
+    }
+
+    .content {
+      width: min(100%, var(--content-w));
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      padding: 14px 0 28px;
+    }
+
+    /* =========================================================
+       PROFILE / LOGO
+    ========================================================= */
+
+    .hero {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      text-align: center;
+
+      animation: heroIn .9s ease both;
+    }
+
+    .logo-wrap {
+      position: relative;
+
+      width: 158px;
+      height: 158px;
+
+      display: grid;
+      place-items: center;
+
+      margin-bottom: 10px;
+    }
+
+    .logo-wrap::before {
+      content: "";
+
+      position: absolute;
+      inset: 12px;
+
+      border-radius: 50%;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(34,225,255,.20),
+          rgba(155,91,245,.10) 42%,
+          transparent 72%
+        );
+
+      filter: blur(10px);
+
+      animation: logoGlow 4s ease-in-out infinite;
+    }
+
+    .logo-wrap::after {
+      content: "";
+
+      position: absolute;
+      inset: 4px;
+
+      border-radius: 50%;
+
+      border: 1px solid rgba(255,255,255,.08);
+
+      box-shadow:
+        0 0 35px rgba(34,225,255,.10),
+        inset 0 0 30px rgba(155,91,245,.06);
+
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    .logo {
+      position: relative;
+      z-index: 2;
+
+      width: 124px;
+      height: 124px;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(0 0 10px rgba(34,225,255,.35))
+        drop-shadow(0 0 28px rgba(59,109,255,.20));
+
+      animation: logoFloat 5s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes logoGlow {
+      0%,100% {
+        opacity: .7;
+        transform: scale(.95);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.08);
+      }
+    }
+
+    @keyframes ringPulse {
+      0%,100% {
+        opacity: .55;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.04);
+      }
+    }
+
+    .brand {
+      font-family: var(--font-display);
+      font-size: clamp(27px, 7vw, 38px);
+      font-weight: 800;
+      letter-spacing: .12em;
+
+      line-height: 1.1;
+
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          #bdefff 35%,
+          #9b8cff 68%,
+          #ff9acb
+        );
+
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+
+      text-shadow: 0 0 28px rgba(34,225,255,.12);
+    }
+
+    .tagline {
+      margin-top: 10px;
+
+      font-size: 14px;
+      line-height: 1.65;
+
+      color: rgba(245,247,255,.78);
+    }
+
+    .description {
+      max-width: 460px;
+
+      margin-top: 9px;
+
+      font-size: 12.5px;
+      line-height: 1.8;
+
+      color: rgba(245,247,255,.52);
+    }
+
+    /* =========================================================
+       CHIPS
+    ========================================================= */
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+
+      gap: 8px;
+
+      margin-top: 18px;
+    }
+
+    .chip {
+      padding: 7px 11px;
+
+      border-radius: 999px;
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      background: rgba(8,11,24,.46);
+
+      color: rgba(245,247,255,.65);
+
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .02em;
+
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.04),
+        0 8px 25px rgba(0,0,0,.12);
+    }
+
+    /* =========================================================
+       LINKS
+    ========================================================= */
+
+    .links {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+
+      margin-top: 25px;
+    }
+
+    .link-btn {
+      position: relative;
+
+      width: 100%;
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 11px 14px;
+
+      text-decoration: none;
+
+      border-radius: 18px;
+
+      border: 1px solid var(--glass-border);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(18,23,48,.70),
+          rgba(7,10,25,.56)
+        );
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.045);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      overflow: hidden;
+
+      transform: translateZ(0);
+
+      transition:
+        transform .25s ease,
+        border-color .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+    }
+
+    .link-btn::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          110deg,
+          transparent 20%,
+          rgba(255,255,255,.06) 45%,
+          transparent 70%
+        );
+
+      transform: translateX(-110%);
+      transition: transform .7s ease;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-3px);
+
+      border-color: rgba(34,225,255,.28);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(19,29,61,.78),
+          rgba(9,12,31,.66)
+        );
+
+      box-shadow:
+        0 20px 55px rgba(0,0,0,.32),
+        0 0 25px rgba(34,225,255,.07),
+        inset 0 1px 0 rgba(255,255,255,.07);
+    }
+
+    .link-btn:hover::before {
+      transform: translateX(110%);
+    }
+
+    .icon-box {
+      flex: 0 0 46px;
+
+      width: 46px;
+      height: 46px;
+
+      display: grid;
+      place-items: center;
+
+      margin-right: 13px;
+
+      border-radius: 14px;
+
+      background: rgba(255,255,255,.065);
+
+      border: 1px solid rgba(255,255,255,.09);
+
+      box-shadow:
+        inset 0 0 18px rgba(255,255,255,.025);
+    }
+
+    .icon-box svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .icon-instagram {
+      background:
+        linear-gradient(
+          145deg,
+          rgba(236,72,153,.23),
+          rgba(155,91,245,.16)
+        );
+    }
+
+    .icon-facebook {
+      background: rgba(59,109,255,.14);
+    }
+
+    .icon-whatsapp {
+      background: rgba(34,197,94,.13);
+    }
+
+    .icon-x {
+      background: rgba(255,255,255,.08);
+    }
+
+    .icon-web {
+      background: rgba(34,225,255,.12);
+    }
+
+    .link-text {
+      min-width: 0;
+      flex: 1;
+
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .link-title {
+      font-size: 13px;
+      font-weight: 700;
+
+      color: var(--white);
+    }
+
+    .link-desc {
+      font-size: 10.5px;
+      line-height: 1.4;
+
+      color: rgba(245,247,255,.45);
+    }
+
+    .arrow {
+      flex: 0 0 auto;
+
+      margin-left: 10px;
+
+      color: rgba(245,247,255,.38);
+
+      font-size: 18px;
+
+      transition:
+        transform .25s ease,
+        color .25s ease;
+    }
+
+    .link-btn:hover .arrow {
+      transform: translateX(4px);
+      color: var(--cyan);
+    }
+
+    /* =========================================================
+       CTA
+    ========================================================= */
+
+    .cta {
+      position: relative;
+
+      width: 100%;
+
+      margin-top: 20px;
+      padding: 20px;
+
+      text-align: center;
+
+      border-radius: 20px;
+
+      border: 1px solid rgba(155,91,245,.18);
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(59,109,255,.13),
+          transparent 60%
+        ),
+        rgba(7,10,25,.52);
+
+      box-shadow:
+        0 20px 60px rgba(0,0,0,.22),
+        inset 0 1px 0 rgba(255,255,255,.04);
+
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+
+      height: 1px;
+
+      background:
+        linear-gradient(
+          90deg,
+          transparent,
+          rgba(34,225,255,.7),
+          rgba(155,91,245,.7),
+          transparent
+        );
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: .03em;
+    }
+
+    .cta-text {
+      margin-top: 7px;
+
+      font-size: 11px;
+      line-height: 1.7;
+
+      color: rgba(245,247,255,.48);
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+
+      margin-top: 15px;
+      padding: 0 20px;
+
+      border-radius: 999px;
+
+      color: #fff;
+      text-decoration: none;
+
+      font-size: 11px;
+      font-weight: 700;
+
+      background:
+        linear-gradient(
+          100deg,
+          var(--blue),
+          var(--violet),
+          var(--magenta)
+        );
+
+      box-shadow:
+        0 10px 30px rgba(59,109,255,.20);
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 14px 38px rgba(59,109,255,.28);
+    }
+
+    /* =========================================================
+       FOOTER
+    ========================================================= */
+
+    .footer {
+      width: 100%;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      gap: 5px;
+
+      margin-top: 22px;
+
+      text-align: center;
+
+      color: rgba(245,247,255,.28);
+
+      font-size: 9.5px;
+      letter-spacing: .04em;
+    }
+
+    .footer-main {
+      font-family: var(--font-display);
+      font-size: 9px;
+      letter-spacing: .13em;
+
+      color: rgba(245,247,255,.40);
+    }
+
+    /* =========================================================
+       BUSINESS CARD MODAL
+    ========================================================= */
+
+    .card-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 24px;
+
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+
+      transition:
+        opacity .35s ease,
+        visibility .35s ease;
+    }
+
+    .card-modal.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .card-modal-overlay {
+      position: absolute;
+      inset: 0;
+
+      background: rgba(2,3,10,.84);
+
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .card-modal-content {
+      position: relative;
+      z-index: 2;
+
+      width: min(900px, 100%);
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      animation: modalIn .4s ease both;
+    }
+
+    @keyframes modalIn {
+      from {
+        transform: translateY(20px) scale(.96);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+    }
+
+    .card-close {
+      position: absolute;
+
+      top: -48px;
+      right: 0;
+
+      width: 42px;
+      height: 42px;
+
+      display: grid;
+      place-items: center;
+
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 50%;
+
+      background: rgba(10,12,25,.80);
+      color: white;
+
+      font-size: 27px;
+      line-height: 1;
+
+      cursor: pointer;
+
+      z-index: 20;
+
+      transition:
+        transform .25s ease,
+        background .25s ease,
+        border-color .25s ease;
+    }
+
+    .card-close:hover {
+      transform: rotate(90deg);
+
+      background: rgba(255,255,255,.12);
+
+      border-color: rgba(34,225,255,.30);
+    }
+
+    .business-card-wrapper {
+      width: min(760px, 90vw);
+
+      aspect-ratio: 1.75 / 1;
+
+      perspective: 1800px;
+
+      cursor: pointer;
+    }
+
+    .business-card-inner {
+      position: relative;
+
+      width: 100%;
+      height: 100%;
+
+      transform-style: preserve-3d;
+
+      transition:
+        transform .8s cubic-bezier(.2,.7,.2,1);
+    }
+
+    .business-card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .business-card-face {
+      position: absolute;
+      inset: 0;
+
+      width: 100%;
+      height: 100%;
+
+      overflow: hidden;
+
+      border-radius: 18px;
+
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+
+      box-shadow:
+        0 35px 90px rgba(0,0,0,.60),
+        0 0 45px rgba(34,225,255,.10);
+    }
+
+    .business-card-face img {
+      display: block;
+
+      width: 100%;
+      height: 100%;
+
+      object-fit: contain;
+
+      border-radius: inherit;
+    }
+
+    .business-card-back {
+      transform: rotateY(180deg);
+    }
+
+    .card-controls {
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+
+      margin-top: 23px;
+    }
+
+    .card-control-btn {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+
+      padding: 0 17px;
+
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 999px;
+
+      background: rgba(255,255,255,.07);
+
+      color: white;
+
+      text-decoration: none;
+
+      font-size: 11px;
+      font-weight: 600;
+
+      cursor: pointer;
+
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+
+      transition:
+        transform .2s ease,
+        background .2s ease,
+        border-color .2s ease;
+    }
+
+    .card-control-btn:hover {
+      transform: translateY(-2px);
+
+      background: rgba(255,255,255,.13);
+
+      border-color: rgba(34,225,255,.35);
+    }
+
+    .card-hint {
+      margin-top: 12px;
+
+      color: rgba(255,255,255,.42);
+
+      font-size: 10px;
+
+      text-align: center;
+    }
+
+    /* =========================================================
+       ENTRANCE ANIMATION
+    ========================================================= */
+
+    .animate-in {
+      opacity: 0;
+      transform: translateY(15px);
+
+      animation: contentIn .65s ease forwards;
+    }
+
+    @keyframes contentIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* =========================================================
+       MOBILE
+    ========================================================= */
+
+    @media (max-width: 600px) {
+      .page {
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+
+      .content {
+        padding-top: 5px;
+      }
+
+      .logo-wrap {
+        width: 142px;
+        height: 142px;
+      }
+
+      .logo {
+        width: 112px;
+        height: 112px;
+      }
+
+      .description {
+        font-size: 11.5px;
+      }
+
+      .link-btn {
+        min-height: 68px;
+        border-radius: 16px;
+      }
+
+      .icon-box {
+        flex-basis: 43px;
+        width: 43px;
+        height: 43px;
+        margin-right: 11px;
+      }
+
+      .link-title {
+        font-size: 12px;
+      }
+
+      .link-desc {
+        font-size: 9.5px;
+      }
+
+      .card-modal {
+        padding: 18px;
+      }
+
+      .business-card-wrapper {
+        width: 94vw;
+      }
+
+      .card-close {
+        top: -54px;
+        right: 0;
+      }
+
+      .card-controls {
+        margin-top: 18px;
+      }
+
+      .card-control-btn {
+        min-height: 40px;
+        padding: 0 13px;
+        font-size: 10px;
+      }
+
+      .card-hint {
+        font-size: 9px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .brand {
+        font-size: 25px;
+      }
+
+      .chips {
+        gap: 6px;
+      }
+
+      .chip {
+        padding: 6px 9px;
+        font-size: 9.5px;
+      }
+
+      .card-control-btn {
+        padding: 0 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-  <!-- Fixed background (image 2 — actual brand background asset) -->
   <div class="bg-layer" id="bgLayer"></div>
-  <div class="bg-overlay"></div>
-  <div class="glow-orbs" aria-hidden="true">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-  </div>
-  <div class="particle-field" id="particleField" aria-hidden="true"></div>
+  <div class="bg-vignette"></div>
+  <div class="grid"></div>
+  <div class="noise"></div>
+  <div class="particles" id="particles"></div>
 
   <main class="page">
+    <div class="content">
 
-    <!-- ============ HERO ============ -->
-    <header class="hero">
-      <div class="logo-stage">
-        <div class="logo-wrap" id="logoWrap">
-          <img class="logo" src="logo-sm-removebg-preview.png" alt="FluxMedia logo">
+      <!-- =====================================================
+           HERO
+      ====================================================== -->
+
+      <section class="hero">
+
+        <div class="logo-wrap">
+          <img
+            class="logo"
+            src="logo-sm-removebg-preview.png"
+            alt="FluxMedia logo"
+          >
         </div>
-      </div>
 
-      <h1 class="wordmark">FLUXMEDIA</h1>
-      <p class="tagline">Systems that make business easier.</p>
+        <h1 class="brand">FLUXMEDIA</h1>
 
-      <div class="chips">
-        <span class="chip chip-ai">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#8fd8ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3a3 3 0 0 0-3 3v.3A3 3 0 0 0 4.5 9a3 3 0 0 0 0 6A3 3 0 0 0 6 17.7V18a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M15 3a3 3 0 0 1 3 3v.3A3 3 0 0 1 19.5 9a3 3 0 0 1 0 6A3 3 0 0 1 18 17.7V18a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z"/></svg>
-          AI Systems
-        </span>
-        <span class="chip chip-auto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#c9adff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 8.6a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.28a1.65 1.65 0 0 0 1-1.51V2.7a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-          Automation
-        </span>
-        <span class="chip chip-social">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#ffa8d6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7-7 18-2.5-7.5L3 11z"/></svg>
-          Social Media
-        </span>
-      </div>
-    </header>
+        <p class="tagline">
+          Systems that make business easier.
+        </p>
 
+        <p class="description">
+          We build intelligent systems that make businesses easier,
+          more efficient and more comfortable to operate —
+          from AI systems and automation to social media management.
+        </p>
 
-    <a
-  class="link-btn"
-  href="business-card.png"
-  download="FLUXMEDIA-Business-Card.png"
->
-  <span class="icon-box icon-web">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"
-      stroke-linecap="round" stroke-linejoin="round">
-      <path d="M12 3v12"/>
-      <path d="m7 10 5 5 5-5"/>
-      <path d="M5 21h14"/>
-    </svg>
-  </span>
+        <div class="chips" aria-label="FluxMedia services">
+          <span class="chip">AI Systems</span>
+          <span class="chip">Automation</span>
+          <span class="chip">Social Media</span>
+        </div>
 
-  <span class="link-text">
-    <span class="link-title">Business Card</span>
-    <span class="link-desc">Download our digital business card</span>
-  </span>
+      </section>
 
-  <span class="arrow">↓</span>
-</a>
+      <!-- =====================================================
+           LINKS
+      ====================================================== -->
 
-    <!-- ============ SOCIAL LINKS ============ -->
-    <section class="links" aria-label="Social links">
+      <section class="links" aria-label="FluxMedia links">
 
-      <a class="link-btn" data-link="instagram" href="#" target="_blank" rel="noopener">
-        <span class="icon-box icon-ig">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".9" fill="#fff" stroke="none"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-title">Instagram</span>
-          <span class="link-desc">Follow our latest updates</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
+        <!-- BUSINESS CARD -->
+        <a
+          href="#"
+          class="link-btn"
+          id="businessCardBtn"
+        >
+          <span class="icon-box icon-web">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="M3 10h18"/>
+              <path d="M7 15h4"/>
+            </svg>
+          </span>
 
-      <a class="link-btn" data-link="facebook" href="#" target="_blank" rel="noopener">
-        <span class="icon-box icon-fb">
-          <svg viewBox="0 0 24 24" fill="#fff"><path d="M14.5 21v-7.8h2.62l.39-3.04H14.5V8.24c0-.88.24-1.48 1.5-1.48h1.6V4.05C17.3 4 16.4 3.9 15.36 3.9c-2.16 0-3.64 1.32-3.64 3.74v2.52H9.1v3.04h2.62V21h2.78z"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-title">Facebook</span>
-          <span class="link-desc">Join our community</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
+          <span class="link-text">
+            <span class="link-title">Business Card</span>
+            <span class="link-desc">
+              View our digital business card
+            </span>
+          </span>
 
-      <a class="link-btn" data-link="whatsapp" href="#" target="_blank" rel="noopener">
-        <span class="icon-box icon-wa">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3.2a8.8 8.8 0 0 0-7.6 13.2L3 21l4.7-1.4A8.8 8.8 0 1 0 12 3.2z" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/><path d="M8.5 8.6c.2-.4.4-.4.6-.4h.5c.15 0 .3.03.45.36.2.44.6 1.4.65 1.5.06.1.1.22.02.36-.08.15-.12.22-.24.34-.12.13-.25.24-.36.36-.12.12-.24.23-.1.47.14.24.64 1.05 1.37 1.7.94.85 1.73 1.1 1.98 1.23.25.12.4.1.54-.05.16-.16.62-.7.79-.95.16-.24.33-.2.55-.12.23.08 1.44.68 1.68.8.25.13.4.19.46.3.06.12.06.66-.16 1.3-.23.65-1.32 1.22-1.83 1.28-.46.06-1.04.09-1.68-.1-1.65-.5-2.8-1.4-3.68-2.35-.72-.78-1.28-1.63-1.6-2.44-.31-.77-.2-1.24-.08-1.55z" fill="#fff"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-title">WhatsApp</span>
-          <span class="link-desc">Chat with us directly</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="link-btn" data-link="x" href="#" target="_blank" rel="noopener">
-        <span class="icon-box icon-x">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><path d="M5 4l14 16M19 4L5 20"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-title">X / Twitter</span>
-          <span class="link-desc">Real-time updates &amp; ideas</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
-
-      <a class="link-btn" data-link="website" href="#" target="_blank" rel="noopener">
-        <span class="icon-box icon-web">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18M4.3 7.5h15.4M4.3 16.5h15.4"/></svg>
-        </span>
-        <span class="link-text">
-          <span class="link-title">Website</span>
-          <span class="link-desc">Explore our services</span>
-        </span>
-        <span class="arrow">→</span>
-      </a>
-
-    </section>
-
-    <!-- ============ CTA ============ -->
-    <section class="cta-card">
-      <div class="cta-inner">
-        <h2>Build smarter with FluxMedia</h2>
-        <p>AI systems, automation and social media management designed around your business.</p>
-        <a class="cta-btn" data-link="website" href="#" target="_blank" rel="noopener">
-          Explore FluxMedia <span>→</span>
+          <span class="arrow">→</span>
         </a>
-      </div>
-    </section>
 
-    <!-- ============ FOOTER ============ -->
-    <footer class="mini-footer">
-      <span><svg viewBox="0 0 24 24" fill="#ffd76a"><path d="M13 2 3 14h7l-1 8 11-14h-7l0-6z"/></svg> Smarter Systems</span>
-      <span><svg viewBox="0 0 24 24" fill="none" stroke="#8fd8ff" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8" fill="#8fd8ff"/></svg> Better Results</span>
-      <span><svg viewBox="0 0 24 24" fill="#ff8fc4"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.2 2.3 4.8 5.7 4.2c2-.35 3.7.6 4.8 2.2 1.1-1.6 2.8-2.55 4.8-2.2 3.4.6 5.3 4 3.7 7.5C19.5 16.4 12 21 12 21z"/></svg> Your Growth</span>
-    </footer>
+        <!-- INSTAGRAM -->
+        <a
+          class="link-btn"
+          data-link="instagram"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="icon-box icon-instagram">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r=".8" fill="#fff" stroke="none"/>
+            </svg>
+          </span>
 
+          <span class="link-text">
+            <span class="link-title">Instagram</span>
+            <span class="link-desc">
+              Follow FluxMedia on Instagram
+            </span>
+          </span>
+
+          <span class="arrow">→</span>
+        </a>
+
+        <!-- FACEBOOK -->
+        <a
+          class="link-btn"
+          data-link="facebook"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="icon-box icon-facebook">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M14 8h3V4h-3c-3.3 0-5 1.9-5 5v3H6v4h3v4h4v-4h3l1-4h-4V9c0-.7.3-1 1-1Z"/>
+            </svg>
+          </span>
+
+          <span class="link-text">
+            <span class="link-title">Facebook</span>
+            <span class="link-desc">
+              Connect with FluxMedia on Facebook
+            </span>
+          </span>
+
+          <span class="arrow">→</span>
+        </a>
+
+        <!-- WHATSAPP -->
+        <a
+          class="link-btn"
+          data-link="whatsapp"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="icon-box icon-whatsapp">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4.1A8 8 0 1 1 20 11.5Z"/>
+              <path d="M8.5 8.5c.3-.6.6-.6.9-.6h.5c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.6.7c.5 1 1.3 1.8 2.3 2.3l.7-.6c.2-.2.4-.2.6-.1l1.7.7c.3.1.4.3.4.5v.5c0 .3 0 .6-.6.9-.5.3-1.3.4-2.1.1-1.2-.4-2.4-1.1-3.4-2.1s-1.7-2.2-2.1-3.4c-.3-.8-.2-1.6.1-2.1Z"/>
+            </svg>
+          </span>
+
+          <span class="link-text">
+            <span class="link-title">WhatsApp</span>
+            <span class="link-desc">
+              Chat with FluxMedia directly
+            </span>
+          </span>
+
+          <span class="arrow">→</span>
+        </a>
+
+        <!-- X / TWITTER -->
+        <a
+          class="link-btn"
+          data-link="x"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="icon-box icon-x">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M5 4l14 16"/>
+              <path d="M19 4 5 20"/>
+            </svg>
+          </span>
+
+          <span class="link-text">
+            <span class="link-title">X / Twitter</span>
+            <span class="link-desc">
+              Follow FluxMedia on X
+            </span>
+          </span>
+
+          <span class="arrow">→</span>
+        </a>
+
+        <!-- WEBSITE -->
+        <a
+          class="link-btn"
+          data-link="website"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span class="icon-box icon-web">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              stroke-width="1.8"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M3 12h18"/>
+              <path d="M12 3c2.4 2.5 3.6 5.5 3.6 9S14.4 18.5 12 21"/>
+              <path d="M12 3c-2.4 2.5-3.6 5.5-3.6 9S9.6 18.5 12 21"/>
+            </svg>
+          </span>
+
+          <span class="link-text">
+            <span class="link-title">Website</span>
+            <span class="link-desc">
+              Explore the FluxMedia website
+            </span>
+          </span>
+
+          <span class="arrow">→</span>
+        </a>
+
+      </section>
+
+      <!-- =====================================================
+           CTA
+      ====================================================== -->
+
+      <section class="cta">
+        <h2 class="cta-title">
+          Build smarter with FluxMedia
+        </h2>
+
+        <p class="cta-text">
+          Turn repetitive work into intelligent systems
+          and build a stronger digital presence.
+        </p>
+
+        <a
+          class="cta-btn"
+          data-link="website"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Explore FluxMedia
+        </a>
+      </section>
+
+      <!-- =====================================================
+           FOOTER
+      ====================================================== -->
+
+      <footer class="footer">
+        <div class="footer-main">
+          SMARTER SYSTEMS · BETTER RESULTS
+        </div>
+
+        <div>
+          © 2026 FluxMedia. All rights reserved.
+        </div>
+      </footer>
+
+    </div>
   </main>
 
-<script>
-(function(){
-  'use strict';
+  <!-- =========================================================
+       BUSINESS CARD MODAL
+  ========================================================== -->
 
-  /* ==========================================================
-     EDIT YOUR LINKS HERE — the only place you need to touch
-  ========================================================== */
-  var SOCIAL_LINKS = {
-    instagram: "https://www.instagram.com/1fluxmedia?stkn=OHYyOHppODIxNW1m&utm_source=qr",
-    linkedin:  "https://www.linkedin.com/company/YOUR_LINKEDIN",
-    facebook:  "https://www.facebook.com/share/19bm5RfGWU/?mibextid=wwXIfr",
-    whatsapp:  "https://wa.me/YOUR_WHATSAPP_NUMBER",
-    x:         "https://x.com/flux_media_ag?s=11",
-    website:   "https://fluxmedia-five.vercel.app/"
-  };
+  <div
+    class="card-modal"
+    id="cardModal"
+    aria-hidden="true"
+  >
 
-  document.querySelectorAll('[data-link]').forEach(function(el){
-    var key = el.getAttribute('data-link');
-    if (SOCIAL_LINKS[key]) el.setAttribute('href', SOCIAL_LINKS[key]);
-  });
+    <div
+      class="card-modal-overlay"
+      id="cardModalOverlay"
+    ></div>
 
-  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    <div
+      class="card-modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-label="FluxMedia business card"
+    >
 
-  /* ---------- entrance ---------- */
-  window.addEventListener('DOMContentLoaded', function(){
-    requestAnimationFrame(function(){
-      document.body.classList.add('is-ready');
+      <button
+        class="card-close"
+        id="cardClose"
+        type="button"
+        aria-label="Close business card"
+      >
+        ×
+      </button>
+
+      <div
+        class="business-card-wrapper"
+        id="businessCard"
+        role="button"
+        tabindex="0"
+        aria-label="Flip business card"
+      >
+
+        <div class="business-card-inner">
+
+          <!-- FRONT -->
+          <div class="business-card-face business-card-front">
+            <img
+              src="business-card-front.png"
+              alt="FLUXMEDIA business card — front"
+            >
+          </div>
+
+          <!-- BACK -->
+          <div class="business-card-face business-card-back">
+            <img
+              src="business-card-back.png"
+              alt="FLUXMEDIA business card — back"
+            >
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="card-controls">
+
+        <button
+          id="flipCard"
+          class="card-control-btn"
+          type="button"
+        >
+          ↻ Flip Card
+        </button>
+
+        <a
+          href="business-card-front.png"
+          download="FLUXMEDIA-Business-Card-Front.png"
+          class="card-control-btn"
+        >
+          ↓ Front
+        </a>
+
+        <a
+          href="business-card-back.png"
+          download="FLUXMEDIA-Business-Card-Back.png"
+          class="card-control-btn"
+        >
+          ↓ Back
+        </a>
+
+      </div>
+
+      <p class="card-hint">
+        Click the card or use "Flip Card" to see the other side.
+      </p>
+
+    </div>
+
+  </div>
+
+  <script>
+    /* =========================================================
+       FLUXMEDIA LINKS
+    ========================================================== */
+
+    const SOCIAL_LINKS = {
+      instagram:
+        "https://www.instagram.com/1fluxmedia?stkn=OHYyOHppODIxNW1m&utm_source=qr",
+
+      facebook:
+        "https://www.facebook.com/share/19bm5RfGWU/?mibextid=wwXIfr",
+
+      whatsapp:
+        "https://wa.me/YOUR_WHATSAPP_NUMBER",
+
+      x:
+        "https://x.com/flux_media_ag?s=11",
+
+      website:
+        "https://fluxmedia-five.vercel.app/"
+    };
+
+    document.querySelectorAll("[data-link]").forEach((element) => {
+      const key = element.getAttribute("data-link");
+
+      if (SOCIAL_LINKS[key]) {
+        element.href = SOCIAL_LINKS[key];
+      }
     });
-  });
 
-  /* ---------- desktop mouse parallax ---------- */
-  var canHoverFine = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-  if (canHoverFine && !reduceMotion){
-    var bgLayer = document.getElementById('bgLayer');
-    var logoWrap = document.getElementById('logoWrap');
-    var targetX = 0, targetY = 0, curX = 0, curY = 0;
-    var raf = null;
 
-    window.addEventListener('mousemove', function(e){
-      var w = window.innerWidth, h = window.innerHeight;
-      targetX = (e.clientX / w - 0.5) * 2;   // -1 .. 1
-      targetY = (e.clientY / h - 0.5) * 2;
-      if (!raf) raf = requestAnimationFrame(tick);
-    }, { passive:true });
+    /* =========================================================
+       BUSINESS CARD VIEWER
+    ========================================================== */
 
-    function tick(){
-      curX += (targetX - curX) * 0.06;
-      curY += (targetY - curY) * 0.06;
+    const businessCardBtn =
+      document.getElementById("businessCardBtn");
 
-      bgLayer.style.transform =
-        'translate3d(' + (curX * -14) + 'px,' + (curY * -10) + 'px,0) scale(1.03)';
+    const cardModal =
+      document.getElementById("cardModal");
 
-      if (logoWrap){
-        logoWrap.style.transform =
-          'rotateY(' + (curX * 6) + 'deg) rotateX(' + (curY * -6) + 'deg)';
+    const cardModalOverlay =
+      document.getElementById("cardModalOverlay");
+
+    const cardClose =
+      document.getElementById("cardClose");
+
+    const flipCard =
+      document.getElementById("flipCard");
+
+    const businessCard =
+      document.getElementById("businessCard");
+
+    const businessCardInner =
+      document.querySelector(".business-card-inner");
+
+
+    function openBusinessCard() {
+      cardModal.classList.add("active");
+      cardModal.setAttribute("aria-hidden", "false");
+
+      document.body.classList.add("modal-open");
+
+      businessCard.focus();
+    }
+
+
+    function closeBusinessCard() {
+      cardModal.classList.remove("active");
+      cardModal.setAttribute("aria-hidden", "true");
+
+      document.body.classList.remove("modal-open");
+
+      // Always return to the front when closing.
+      businessCardInner.classList.remove("flipped");
+    }
+
+
+    function toggleBusinessCard() {
+      businessCardInner.classList.toggle("flipped");
+    }
+
+
+    businessCardBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      openBusinessCard();
+    });
+
+
+    cardClose.addEventListener("click", closeBusinessCard);
+
+
+    cardModalOverlay.addEventListener(
+      "click",
+      closeBusinessCard
+    );
+
+
+    flipCard.addEventListener(
+      "click",
+      toggleBusinessCard
+    );
+
+
+    businessCard.addEventListener(
+      "click",
+      toggleBusinessCard
+    );
+
+
+    businessCard.addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          toggleBusinessCard();
+        }
+      }
+    );
+
+
+    document.addEventListener(
+      "keydown",
+      function(event) {
+        if (event.key === "Escape" &&
+            cardModal.classList.contains("active")) {
+          closeBusinessCard();
+        }
+      }
+    );
+
+
+    /* =========================================================
+       ENTRANCE ANIMATIONS
+    ========================================================== */
+
+    const animatedElements = [
+      ...document.querySelectorAll(".links .link-btn"),
+      document.querySelector(".cta"),
+      document.querySelector(".footer")
+    ];
+
+    animatedElements.forEach((element, index) => {
+      if (!element) return;
+
+      element.classList.add("animate-in");
+      element.style.animationDelay = `${0.12 + index * 0.07}s`;
+    });
+
+
+    /* =========================================================
+       FLOATING PARTICLES
+    ========================================================== */
+
+    const particlesContainer =
+      document.getElementById("particles");
+
+    const particleCount =
+      window.innerWidth < 600 ? 18 : 28;
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle =
+        document.createElement("span");
+
+      particle.className = "particle";
+
+      particle.style.left =
+        `${Math.random() * 100}%`;
+
+      particle.style.animationDuration =
+        `${10 + Math.random() * 18}s`;
+
+      particle.style.animationDelay =
+        `${-Math.random() * 20}s`;
+
+      particle.style.opacity =
+        `${0.18 + Math.random() * 0.55}`;
+
+      const size =
+        1.5 + Math.random() * 2.2;
+
+      particle.style.width =
+        `${size}px`;
+
+      particle.style.height =
+        `${size}px`;
+
+      particlesContainer.appendChild(particle);
+    }
+
+
+    /* =========================================================
+       SUBTLE MOUSE PARALLAX
+    ========================================================== */
+
+    const bgLayer =
+      document.getElementById("bgLayer");
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let currentX = 0;
+    let currentY = 0;
+
+    if (window.matchMedia("(pointer:fine)").matches) {
+
+      window.addEventListener(
+        "mousemove",
+        function(event) {
+          mouseX =
+            (event.clientX / window.innerWidth - .5) * 2;
+
+          mouseY =
+            (event.clientY / window.innerHeight - .5) * 2;
+        },
+        { passive: true }
+      );
+
+
+      function parallax() {
+        currentX += (mouseX - currentX) * .035;
+        currentY += (mouseY - currentY) * .035;
+
+        bgLayer.style.transform =
+          `scale(1.03) translate(${currentX * 8}px, ${currentY * 8}px)`;
+
+        requestAnimationFrame(parallax);
       }
 
-      if (Math.abs(targetX - curX) > 0.001 || Math.abs(targetY - curY) > 0.001){
-        raf = requestAnimationFrame(tick);
-      } else {
-        raf = null;
-      }
+      parallax();
     }
-  }
+  </script>
 
-  /* ---------- floating particles ---------- */
-  if (!reduceMotion){
-    var field = document.getElementById('particleField');
-    var count = window.innerWidth < 560 ? 14 : 26;
-
-    for (var i = 0; i < count; i++){
-      var p = document.createElement('div');
-      p.className = 'particle';
-      var size = (Math.random() * 2.2 + 1.2).toFixed(1);
-      var left = (Math.random() * 100).toFixed(2);
-      var dur = (Math.random() * 10 + 10).toFixed(1);
-      var delay = (Math.random() * 14).toFixed(1);
-      var drift = (Math.random() * 60 - 30).toFixed(0);
-
-      p.style.width = size + 'px';
-      p.style.height = size + 'px';
-      p.style.left = left + '%';
-      p.style.setProperty('--drift', drift + 'px');
-      p.style.animationDuration = dur + 's';
-      p.style.animationDelay = delay + 's';
-
-      field.appendChild(p);
-    }
-  }
-
-})();
-</script>
 </body>
 </html>
